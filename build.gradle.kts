@@ -18,7 +18,6 @@ repositories {
 dependencies {
     implementation("org.apache.pulsar:pulsar-client-original:3.1.2")
     implementation("org.springframework.boot:spring-boot-starter-pulsar") { exclude(group = "org.apache.pulsar") }
-    implementation("org.springframework.boot:spring-boot-starter-web")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
