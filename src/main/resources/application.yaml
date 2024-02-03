@@ -1,11 +1,6 @@
-# application config
-server.port: 7070
-
 spring:
   pulsar:
     client:
-      service-url: "pulsar+ssl://pulsar-dev.pulsar-nprod-gcp.collibra-ops.com:6651"
+      service-url: "pulsar://localhost:6650"
       authentication:
         plugin-class-name: org.apache.pulsar.client.impl.auth.AuthenticationToken
-        param:
-          token: MzVlN2NjMDYtMGIwMi00Zjk5LWVhNjItZTYwZjU2ZmRmN2VjOjIxNjAxY2E0LTdmN2EtODAwNC1lZGVhLTdlNDY0YTczMTYxNA==

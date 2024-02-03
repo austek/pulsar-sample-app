@@ -1,22 +1,31 @@
-package com.collibra.csp.client.examples;
+package org.example;
 
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.pulsar.annotation.PulsarListener;
+import org.springframework.pulsar.core.PulsarTemplate;
 
 @SpringBootApplication
-@EnableWebMvc
-@Slf4j
 public class ExampleMessageProducerApplication {
 
     public static void main(String[] args) {
-        registerShutdownHook();
         SpringApplication.run(ExampleMessageProducerApplication.class, args);
     }
 
-    private static void registerShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> log.info("Application Shutting down...")));
+    @Bean
+    ApplicationRunner runner1(PulsarTemplate<String> pulsarTemplate) {
+        String topic1 = "your-topic-goes-here";
+        return args -> {
+            for (int i = 0; i < 10; i++) {
+                pulsarTemplate.send(topic1, "This is message " + (i + 1));
+            }
+        };
+    }
+
+    @PulsarListener(subscriptionName = "subscription-1", topics = "your-topic-goes-here")
+    void listen1(String message) {
+        System.out.println("***** " + message);
     }
 }
